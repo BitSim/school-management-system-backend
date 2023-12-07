@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hugcode.managementsystem.mapper.TeacherMapper">
+    <resultMap id="TeacherMap" type="Teacher">
+        <id property="tid" column="tid"/>
+        <result property="tname" column="tname"/>
+        <result property="tsalary" column="tsalary"/>
+        <result property="title" column="title"/>
+        <collection property="courses" ofType="Course">
+            <id property="cid" column="cid"/>
+            <result property="cname" column="cname"/>
+            <result property="ccredit" column="ccredit"/>
+        </collection>
+    </resultMap>
+    <select id="selectAll" resultMap="TeacherMap">
+        select teacher.*,course.cid,course.cname,course.ccredit from teacher
+         left join course on teacher.tid = course.tid
+    </select>
+
+    <update id="updateTeacher">
+        update teacher
+        <set>
+            tid=#{tid},
+            <if test="title != null and title != ''">
+                title=#{title},
+            </if>
+            <if test="tsalary != null and tsalary != ''">
+                tsalary=#{tsalary},
+            </if>
+            <if test="password != null and password != ''">
+                password=#{password},
+            </if>
+            <if test="tname != null and tname != ''">
+                tname=#{tname}
+            </if>
+        </set>
+        where tid = #{tid}
+    </update>
+</mapper>

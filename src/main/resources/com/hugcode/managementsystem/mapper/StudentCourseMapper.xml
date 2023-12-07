@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hugcode.managementsystem.mapper.StudentCourseMapper">
+
+    <delete id="deleteBySidList">
+        delete from student_course where sid in
+        <foreach collection="sids" item="sid" open="(" separator="," close=")">
+            #{sid}
+        </foreach>
+    </delete>
+
+    <delete id="deleteStudentCourse">
+        delete from student_course where sid = #{sid} and cid = #{cid}
+    </delete>
+    <delete id="deleteStudentCourseList">
+        delete from student_course where sid =#{sid} and cid in
+        <foreach collection="cids" item="cid" open="(" separator="," close=")">
+            #{cid}
+        </foreach>
+    </delete>
+
+    <update id="updateGrade" parameterType="studentCourse">
+        update student_course
+        set grade = #{grade}
+        where sid = #{sid} and cid = #{cid}
+    </update>
+
+    <insert id="addStudentCourse">
+        insert into student_course (sid, cid,grade)
+        values (#{sid}, #{cid},#{grade})
+    </insert>
+    <select id="getTotalCredits" resultType="java.lang.Double">
+        select sum(course.ccredit) from student_course,course
+        where
+        student_course.cid=course.cid
+        <if test="sid != null">
+            and student_course.sid=#{sid}
+        </if>
+    </select>
+    <select id="getCompletedCredits" resultType="java.lang.Double">
+        select sum(course.ccredit) from student_course,course
+        where
+            student_course.grade>=60
+        <if test="sid != null">
+            and student_course.sid=#{sid}
+        </if>
+          and student_course.cid=course.cid
+    </select>
+
+    <delete id="addCourseListToStudent">
+        insert into student_course (sid, cid)
+        values
+        <foreach collection="cids" item="cid" separator=",">
+            (#{sid}, #{cid})
+        </foreach>
+    </delete>
+</mapper>

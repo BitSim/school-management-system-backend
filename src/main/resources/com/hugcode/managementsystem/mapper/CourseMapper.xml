@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hugcode.managementsystem.mapper.CourseMapper">
+
+    <update id="addTeacherToCourse">
+        update course set tid=#{tid}
+        where cid=#{cid}
+    </update>
+
+    <update id="removeTeacherFromCourse">
+        update course set tid=null where cid=#{cid}
+    </update>
+    <resultMap id="CourseStatisticsMap" type="CourseStatistics">
+        <result property="cid" column="cid"/>
+        <result property="cname" column="cname"/>
+        <result property="ccredit" column="ccredit"/>
+        <result property="average_grade" column="average_grade"/>
+        <result property="max_grade" column="max_grade"/>
+        <result property="min_grade" column="min_grade"/>
+    </resultMap>
+    <select id="getCourseStatisticsByTeacher" resultMap="CourseStatisticsMap">
+        SELECT
+                course.cid,
+                course.cname,
+                course.ccredit,
+                AVG(student_course.grade) as average_grade,
+                MAX(student_course.grade) as max_grade,
+                MIN(student_course.grade) as min_grade
+        FROM course
+                 LEFT JOIN student_course ON course.cid = student_course.cid
+        WHERE course.tid=#{tid}
+        GROUP BY course.tid, course.cid;
+    </select>
+
+    <select id="getCourseList" resultType="Course">
+        SELECT course.cid, course.cname, course.ccredit, course.tid, teacher.tname
+        FROM course
+                 LEFT JOIN teacher ON course.tid = teacher.tid
+        WHERE NOT EXISTS (
+            SELECT 1 FROM student_course WHERE student_course.sid = #{sid} AND student_course.cid = course.cid
+        );
+    </select>
+</mapper>
