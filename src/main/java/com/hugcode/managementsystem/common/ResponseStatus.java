@@ -12,6 +12,8 @@ public enum ResponseStatus {
     USER_ALREADY_EXIST(1003,"用户已存在"),
     USER_NOT_LOGIN(1004,"用户未登录"),
     USER_NOT_AUTHORIZED(1005,"用户未授权"),
+    COURSE_NOT_EXIST(2006,"课程不存在"),
+    COURSE_EXIST(2007,"课程已存在"),
     STUDENT_OR_COURSE_NOT_EXIST(3001,"学生或课程不存在"),
     TEACHER_OR_COURSE_NOT_EXIST(3002,"教师或课程不存在"),
     TEACHER_NOT_EXIST(3003,"教师不存在"),

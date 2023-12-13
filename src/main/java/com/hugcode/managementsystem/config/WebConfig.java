@@ -3,6 +3,7 @@ package com.hugcode.managementsystem.config;
 import com.hugcode.managementsystem.interceptor.JWTInterceptor;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -24,5 +25,13 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/v3/api-docs");
     }
 
-
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
+//                .allowCredentials(true)
+                .maxAge(3600);
+    }
 }

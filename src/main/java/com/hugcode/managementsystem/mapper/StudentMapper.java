@@ -23,4 +23,6 @@ public interface StudentMapper {
     boolean deleteBySidList(List<String> sids);
 
     Integer login(Student student);
+
+    boolean resetPassword(@Param("sid") String sid, @Param("password") String password);
 }

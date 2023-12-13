@@ -13,4 +13,12 @@ public interface CourseService {
     List<CourseStatistics> getGradeStatisticsByTeacher(String tid);
 
     List<Course> getCourseList(String sid);
+
+    List<Course> selectByCondition(Course course);
+
+    Boolean updateCourse(String cid, Course course);
+
+    Boolean deleteCourseList(List<String> cids);
+
+    Boolean insertCourse(Course course);
 }

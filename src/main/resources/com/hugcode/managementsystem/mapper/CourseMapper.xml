@@ -42,4 +42,47 @@
             SELECT 1 FROM student_course WHERE student_course.sid = #{sid} AND student_course.cid = course.cid
         );
     </select>
+
+    <select id="selectByCondition" resultType="com.hugcode.managementsystem.pojo.Course">
+        SELECT * FROM course
+        LEFT JOIN teacher ON course.tid = teacher.tid
+        <where>
+            <if test="cid != null and cid != ''">
+                cid=#{cid}
+            </if>
+            <if test="cname != null and cname != ''">
+                AND cname=#{cname}
+            </if>
+            <if test="tname != null and tname != ''">
+                AND tname=#{tname}
+            </if>
+            <if test="ccredit != null">
+                AND ccredit=#{ccredit}
+            </if>
+        </where>
+    </select>
+    <update id="updateCourse">
+        update course
+        <set>
+            <if test="course.ccredit != null">
+                ccredit=#{course.ccredit},
+            </if>
+            <if test="course.cname != null">
+                 cname=#{course.cname},
+            </if>
+        </set>
+        where cid=#{cid}
+    </update>
+
+    <delete id="deleteCourseList">
+        delete from course where cid in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insertCourse">
+        insert into course(cid,cname,ccredit,tid)
+        values(#{cid},#{cname},#{ccredit},#{tid})
+    </insert>
 </mapper>

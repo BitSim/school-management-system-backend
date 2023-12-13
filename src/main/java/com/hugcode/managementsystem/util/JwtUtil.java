@@ -69,12 +69,13 @@ public class JwtUtil {
 //                .setIssuer(issuer) // iss(issuer)：jwt签发者
                 .setSubject(subject) // sub(subject)：jwt所面向的用户，放登录的用户名，一个json格式的字符串，可存放userid，roldid之类，作为用户的唯一标志
                 .signWith(signatureAlgorithm, key); // 设置签名，使用的是签名算法和签名使用的秘钥
+
         // 设置过期时间
         long expTime = EXPIRE_TIME;
         if (expTime >= 0) {
-            long exp = nowTime + expTime;
-            builder.setExpiration(new Date(exp));
+            builder.setExpiration(new Date(nowTime + expTime));
         }
+
 //        // 设置jwt接收者
 //        if (audience == null || "".equals(audience)) {
 //            builder.setAudience("Tom");

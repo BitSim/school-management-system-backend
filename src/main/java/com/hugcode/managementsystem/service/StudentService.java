@@ -23,4 +23,6 @@ public interface StudentService {
     boolean updatePassword(String sid, String newPassword);
 
     boolean login(Student student);
+
+    boolean resetPassword(String sid, String password);
 }

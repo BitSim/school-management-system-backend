@@ -16,4 +16,12 @@ public interface CourseMapper {
     List<CourseStatistics> getCourseStatisticsByTeacher(String tid);
 
     List<Course> getCourseList(String sid);
+
+    List<Course> selectByCondition(Course course);
+
+    Boolean updateCourse(@Param("cid") String cid,@Param("course") Course course);
+
+    Boolean deleteCourseList(List<String> cids);
+
+    Boolean insertCourse(Course course);
 }

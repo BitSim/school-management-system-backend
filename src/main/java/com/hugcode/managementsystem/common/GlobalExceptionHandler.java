@@ -1,5 +1,6 @@
 package com.hugcode.managementsystem.common;
 
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,4 +26,5 @@ public class GlobalExceptionHandler {
         // 在这里你可以返回一个自定义的错误消息
         return ResponseResult.error(400, "请求参数错误");
     }
+
 }

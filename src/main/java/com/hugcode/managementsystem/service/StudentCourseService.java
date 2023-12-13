@@ -18,4 +18,6 @@ public interface StudentCourseService {
 
 
     boolean addCourseListToStudent(String sid, List<String> cids);
+
+    boolean deleteCourseList(List<String> cids);
 }

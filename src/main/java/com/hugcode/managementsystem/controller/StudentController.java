@@ -66,9 +66,9 @@ public class StudentController {
     @Operation(summary = "学生登录",description = "")
     @PostMapping("/login")
     public ResponseResult login(@RequestBody Map<String,String>map) throws Exception {
-        if(map.get("sid")==null||map.get("password")==null) throw new AppException(ResponseStatus.REQUEST_PARAM_ERROR);
+        if(map.get("username")==null||map.get("password")==null) throw new AppException(ResponseStatus.REQUEST_PARAM_ERROR);
         Student student=new Student();
-        student.setSid(map.get("sid"));
+        student.setSid(map.get("username"));
         student.setPassword(map.get("password"));
         if(!studentService.login(student)) return ResponseResult.error(ResponseStatus.USER_NOT_EXIST);
 
@@ -137,6 +137,14 @@ public class StudentController {
         boolean result = studentCourseService.updateGrade(sid, cid, newGrade);
         return result ? ResponseResult.success() : ResponseResult.error(ResponseStatus.ERROR);
     }
-
+    @Operation(summary = "重置学生密码",description = "")
+    @PutMapping("/{sid}/password")
+    public ResponseResult resetPassword(@PathVariable String sid,@RequestBody(required = false) Map<String,String>map){
+        String password="xzc";
+        if(map!=null&&map.get("password")!=null)
+            password=map.get("password");
+        return studentService.resetPassword(sid,password)?ResponseResult.success():
+                ResponseResult.error(ResponseStatus.USER_NOT_EXIST);
+    }
 
 }

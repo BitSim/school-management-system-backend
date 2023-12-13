@@ -47,11 +47,15 @@ public class StudentServiceImpl implements StudentService {
 
         return studentMapper.updatePassword(sid, newPassword);
     }
-
+    @Override
     public boolean login(Student student) {
         return studentMapper.login(student) > 0;
     }
 
 
+    @Override
+    public boolean resetPassword(String sid, String password) {
+        return studentMapper.resetPassword(sid, password);
+    }
 }
 

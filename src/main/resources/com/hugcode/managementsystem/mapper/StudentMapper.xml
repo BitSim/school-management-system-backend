@@ -142,4 +142,10 @@
         where sid = #{sid}
           and password = #{password}
     </select>
+
+    <update id="resetPassword">
+        update student
+        set password = #{password}
+        where sid = #{sid}
+    </update>
 </mapper>

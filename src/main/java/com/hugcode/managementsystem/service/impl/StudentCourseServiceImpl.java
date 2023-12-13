@@ -46,4 +46,9 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
         return studentCourseMapper.addCourseListToStudent(sid, cids);
     }
+
+    @Override
+    public boolean deleteCourseList(List<String>cids) {
+        return studentCourseMapper.deleteCourseList(cids);
+    }
 }

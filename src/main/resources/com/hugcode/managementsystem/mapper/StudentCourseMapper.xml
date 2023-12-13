@@ -56,4 +56,11 @@
             (#{sid}, #{cid})
         </foreach>
     </delete>
+
+    <delete id="deleteCourseList">
+        delete from student_course where cid in
+        <foreach collection="cids" item="cid" open="(" separator="," close=")">
+            #{cid}
+        </foreach>
+    </delete>
 </mapper>

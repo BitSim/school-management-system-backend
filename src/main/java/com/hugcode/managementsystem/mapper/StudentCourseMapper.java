@@ -20,4 +20,6 @@ public interface StudentCourseMapper {
     Double getCompletedCredits(@Param("sid") String sid);
 
     Boolean deleteStudentCourseList(@Param("sid") String sid,@Param("cids") List<String> cids);
+
+    Boolean deleteCourseList(@Param("cids") List<String> cids);
 }

@@ -33,4 +33,25 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getCourseList(String sid) {
         return courseMapper.getCourseList(sid);
     }
+
+    @Override
+    public List<Course> selectByCondition(Course course) {
+        return courseMapper.selectByCondition(course);
+    }
+
+    @Override
+    public Boolean updateCourse(String cid, Course course) {
+        return courseMapper.updateCourse(cid,course);
+
+    }
+
+    @Override
+    public Boolean deleteCourseList(List<String> cids) {
+        return courseMapper.deleteCourseList(cids);
+    }
+
+    @Override
+    public Boolean insertCourse(Course course) {
+        return courseMapper.insertCourse(course);
+    }
 }
