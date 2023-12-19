@@ -1,5 +1,7 @@
 package com.hugcode.managementsystem.service;
 
+import com.hugcode.managementsystem.pojo.StudentCourse;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,4 +22,6 @@ public interface StudentCourseService {
     boolean addCourseListToStudent(String sid, List<String> cids);
 
     boolean deleteCourseList(List<String> cids);
+
+    List<StudentCourse> selectByCondition(String sid, StudentCourse studentCourse);
 }

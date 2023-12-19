@@ -20,8 +20,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Boolean addTeacherToCourse(String tid, String cid) {
-        return courseMapper.addTeacherToCourse(tid,cid);
+    public Boolean addTeacherToCourse(String tid, List<String> cids) {
+        return courseMapper.addTeacherToCourse(tid,cids);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getCourseList(String sid) {
-        return courseMapper.getCourseList(sid);
+    public List<Course> getUnselectedCourses(String sid) {
+        return courseMapper.getUnselectedCourses(sid);
     }
 
     @Override
@@ -53,5 +53,9 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Boolean insertCourse(Course course) {
         return courseMapper.insertCourse(course);
+    }
+    @Override
+    public List<Course> getUntaughtCourses(String tid) {
+        return courseMapper.getUntaughtCourses(tid);
     }
 }

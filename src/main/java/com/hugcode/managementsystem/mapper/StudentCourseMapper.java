@@ -1,5 +1,6 @@
 package com.hugcode.managementsystem.mapper;
 
+import com.hugcode.managementsystem.pojo.StudentCourse;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +23,6 @@ public interface StudentCourseMapper {
     Boolean deleteStudentCourseList(@Param("sid") String sid,@Param("cids") List<String> cids);
 
     Boolean deleteCourseList(@Param("cids") List<String> cids);
+
+    List<StudentCourse> selectByCondition(@Param("sid") String sid,@Param("studentCourse") StudentCourse studentCourse);
 }

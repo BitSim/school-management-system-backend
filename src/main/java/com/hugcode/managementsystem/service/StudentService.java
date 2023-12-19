@@ -8,12 +8,10 @@ import java.util.Map;
 
 public interface StudentService {
 
-    List<Student> selectAll();
     List<Student> selectByCondition(Student student);
     boolean addStudentList(List<Student> students);
     boolean addStudent(Student student);
 
-    boolean deleteStudentList(List<Student> students);
     boolean deleteBySid(String sid);
 
     boolean updateStudent(Student students);

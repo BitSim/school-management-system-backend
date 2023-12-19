@@ -5,6 +5,8 @@ import com.hugcode.managementsystem.common.AppException;
 import com.hugcode.managementsystem.common.ResponseResult;
 import com.hugcode.managementsystem.common.ResponseStatus;
 import com.hugcode.managementsystem.pojo.Student;
+import com.hugcode.managementsystem.pojo.StudentCourse;
+import com.hugcode.managementsystem.service.CourseService;
 import com.hugcode.managementsystem.service.StudentCourseService;
 import com.hugcode.managementsystem.service.StudentService;
 import com.hugcode.managementsystem.util.JwtUtil;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Tag(name = "StudentController", description = "学生控制器")
 @RestController
@@ -27,19 +28,35 @@ public class StudentController {
     private StudentService studentService;
     @Resource
     private StudentCourseService studentCourseService;
+    @Resource
+    private CourseService courseService;
 
     @Operation(summary = "条件查询学生信息", description = "")
-    @GetMapping({"/condition","/{sid}/condition"})
+    @GetMapping({"/condition", "/{sid}/condition"})
     public ResponseResult getStudentByCondition(@ModelAttribute Student student) {
         List<Student> students = studentService.selectByCondition(student);
+
         return ResponseResult.success(students);
     }
 
+    @Operation(summary = "查询指定学号未选修的课程信息", description = "")
+    @GetMapping("/{sid}/courses/unselected")
+    public ResponseResult getUnselectedCourses(@PathVariable String sid) {
+        return ResponseResult.success(courseService.getUnselectedCourses(sid));
+    }
+    @Operation(summary = "条件查询指定学号课程信息", description = "")
+    @GetMapping("/{sid}/courses/condition")
+    public ResponseResult getStudentCourseByCondition(@PathVariable String sid,@ModelAttribute StudentCourse studentCourse) {
+        List<StudentCourse> studentCourses = studentCourseService.selectByCondition(sid,studentCourse);
+        return ResponseResult.success(studentCourses);
+    }
+
     @Operation(summary = "查询学生总学分与完成学分", description = "")
-    @GetMapping({"credits","/{sid}/credits"})
+    @GetMapping({"/credits", "/{sid}/credits"})
     public ResponseResult getStudentCredits(@PathVariable(required = false) String sid) {
         return ResponseResult.success(studentCourseService.getCreditsMap(sid));
     }
+
     @Operation(summary = "添加学生信息", description = "")
     @PostMapping
     //接收student和List students
@@ -123,7 +140,6 @@ public class StudentController {
         Student student = objectMapper.convertValue(requestBody.get("student"), Student.class);
         student.setSid(sid);
         List<String> cids = (List<String>) requestBody.get("cids");
-        System.out.println(requestBody);
         return studentService.updateStudent(student)&&studentCourseService.addCourseListToStudent(sid,cids) ?
                 ResponseResult.success() :
                 ResponseResult.error(ResponseStatus.USER_NOT_EXIST);

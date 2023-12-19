@@ -6,13 +6,13 @@ import com.hugcode.managementsystem.pojo.CourseStatistics;
 import java.util.List;
 
 public interface CourseService {
-    Boolean addTeacherToCourse(String tid,String cid);
+    Boolean addTeacherToCourse(String tid,List<String> cids);
 
     Boolean removeTeacherFromCourse(String cid);
 
     List<CourseStatistics> getGradeStatisticsByTeacher(String tid);
 
-    List<Course> getCourseList(String sid);
+    List<Course> getUnselectedCourses(String sid);
 
     List<Course> selectByCondition(Course course);
 
@@ -21,4 +21,6 @@ public interface CourseService {
     Boolean deleteCourseList(List<String> cids);
 
     Boolean insertCourse(Course course);
+
+    List<Course> getUntaughtCourses(String tid);
 }

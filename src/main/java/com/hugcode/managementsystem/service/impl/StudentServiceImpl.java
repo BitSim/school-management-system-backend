@@ -15,12 +15,12 @@ public class StudentServiceImpl implements StudentService {
     @Resource
     private StudentMapper studentMapper;
 
+
     @Override
-    public List<Student> selectAll() {
-        return studentMapper.selectAll();
+    public List<Student> selectByCondition(Student student) {
+
+        return studentMapper.selectByCondition(student);
     }
-    @Override
-    public List<Student> selectByCondition(Student student) {return studentMapper.selectByCondition(student);}
 
     @Override
     public boolean addStudentList(List<Student> students) {return studentMapper.addStudentList(students);}
@@ -29,8 +29,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean deleteBySid(String sid){return  studentMapper.deleteBySid(sid);}
-    @Override
-    public boolean deleteStudentList(List<Student> students) {return studentMapper.deleteStudentList(students);}
 
     @Override
     public boolean updateStudent(Student student) {

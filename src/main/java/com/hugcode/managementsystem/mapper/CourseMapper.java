@@ -9,13 +9,13 @@ import java.util.List;
 
 @Repository
 public interface CourseMapper {
-    Boolean addTeacherToCourse(@Param("tid") String tid, @Param("cid") String cid);
+    Boolean addTeacherToCourse(@Param("tid") String tid, @Param("cids") List<String> cids);
 
     Boolean removeTeacherFromCourse(String cid);
 
     List<CourseStatistics> getCourseStatisticsByTeacher(String tid);
 
-    List<Course> getCourseList(String sid);
+    List<Course> getUnselectedCourses(String sid);
 
     List<Course> selectByCondition(Course course);
 
@@ -24,4 +24,6 @@ public interface CourseMapper {
     Boolean deleteCourseList(List<String> cids);
 
     Boolean insertCourse(Course course);
+
+    List<Course> getUntaughtCourses(String tid);
 }

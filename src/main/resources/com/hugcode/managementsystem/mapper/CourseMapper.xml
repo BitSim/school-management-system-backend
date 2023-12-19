@@ -5,8 +5,10 @@
 <mapper namespace="com.hugcode.managementsystem.mapper.CourseMapper">
 
     <update id="addTeacherToCourse">
-        update course set tid=#{tid}
-        where cid=#{cid}
+        update course set tid=#{tid} where cid in
+        <foreach collection="cids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
     </update>
 
     <update id="removeTeacherFromCourse">
@@ -34,7 +36,7 @@
         GROUP BY course.tid, course.cid;
     </select>
 
-    <select id="getCourseList" resultType="Course">
+    <select id="getUnselectedCourses" resultType="Course">
         SELECT course.cid, course.cname, course.ccredit, course.tid, teacher.tname
         FROM course
                  LEFT JOIN teacher ON course.tid = teacher.tid
@@ -70,6 +72,9 @@
             <if test="course.cname != null">
                  cname=#{course.cname},
             </if>
+            <if test="course.tid != null and course.tid != ''">
+                tid=#{course.tid},
+            </if>
         </set>
         where cid=#{cid}
     </update>
@@ -85,4 +90,11 @@
         insert into course(cid,cname,ccredit,tid)
         values(#{cid},#{cname},#{ccredit},#{tid})
     </insert>
+
+    <select id="getUntaughtCourses" resultType="com.hugcode.managementsystem.pojo.Course">
+        SELECT course.cid, course.cname, course.ccredit
+        FROM course
+                 LEFT JOIN teacher ON course.tid = teacher.tid
+        WHERE course.tid IS NULL;
+    </select>
 </mapper>

@@ -16,6 +16,8 @@ public class Student {
     private String password;
 
     private List<Course> courses;
+    private Double totalCredits;
+    private Double completedCredits;
 
     public Student() {}
     public Student(String sid, String sname, String ssex, Integer sage) {
@@ -35,6 +37,8 @@ public class Student {
                 ", sage=" + sage +
                 ", password='" + password + '\'' +
                 ", courses=" + courses +
+                ", totalCredits=" + totalCredits +
+                ", completedCredits=" + completedCredits +
                 '}';
     }
 
@@ -84,5 +88,21 @@ public class Student {
 
     public void setCourses(List<Course> courses) {
         this.courses = courses;
+    }
+
+    public Double getTotalCredits() {
+        return totalCredits;
+    }
+
+    public void setTotalCredits(Double totalCredits) {
+        this.totalCredits = totalCredits;
+    }
+
+    public Double getCompletedCredits() {
+        return completedCredits;
+    }
+
+    public void setCompletedCredits(Double completedCredits) {
+        this.completedCredits = completedCredits;
     }
 }

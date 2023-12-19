@@ -2,6 +2,7 @@ package com.hugcode.managementsystem.service.impl;
 
 import com.hugcode.managementsystem.mapper.StudentCourseMapper;
 import com.hugcode.managementsystem.pojo.CourseStatistics;
+import com.hugcode.managementsystem.pojo.StudentCourse;
 import com.hugcode.managementsystem.service.StudentCourseService;
 import com.hugcode.managementsystem.service.StudentService;
 import jakarta.annotation.Resource;
@@ -43,12 +44,19 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
     @Override
     public boolean addCourseListToStudent(String sid, List<String> cids) {
-
+        if (cids.size()==0){
+            return true;
+        }
         return studentCourseMapper.addCourseListToStudent(sid, cids);
     }
 
     @Override
     public boolean deleteCourseList(List<String>cids) {
         return studentCourseMapper.deleteCourseList(cids);
+    }
+
+    @Override
+    public List<StudentCourse> selectByCondition(String sid, StudentCourse studentCourse) {
+        return studentCourseMapper.selectByCondition(sid, studentCourse);
     }
 }

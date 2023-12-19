@@ -8,15 +8,36 @@
         <result property="tname" column="tname"/>
         <result property="tsalary" column="tsalary"/>
         <result property="title" column="title"/>
-        <collection property="courses" ofType="Course">
+        <collection property="courses" ofType="TeacherCourse">
             <id property="cid" column="cid"/>
             <result property="cname" column="cname"/>
             <result property="ccredit" column="ccredit"/>
+            <result property="maxGrade" column="max_grade"/>
+            <result property="minGrade" column="min_grade"/>
+            <result property="avgGrade" column="avg_grade"/>
         </collection>
     </resultMap>
-    <select id="selectAll" resultMap="TeacherMap">
-        select teacher.*,course.cid,course.cname,course.ccredit from teacher
-         left join course on teacher.tid = course.tid
+    <select id="selectByCondition" resultMap="TeacherMap">
+        select teacher.*,course.cid,course.cname,course.ccredit,
+        max(grade) as max_grade,min(grade) as min_grade,avg(grade) as avg_grade
+        from teacher
+        left join course on teacher.tid = course.tid
+        left join student_course on course.cid = student_course.cid
+        <where>
+            <if test="tid != null and tid != ''">
+                teacher.tid=#{tid}
+            </if>
+            <if test="tname != null and tname != ''">
+                and teacher.tname=#{tname}
+            </if>
+            <if test="title != null and title != ''">
+                and teacher.title=#{title}
+            </if>
+            <if test="tsalary != null and tsalary != ''">
+                and teacher.tsalary=#{tsalary}
+            </if>
+        </where>
+        group by teacher.tid,course.cid
     </select>
 
     <update id="updateTeacher">
@@ -38,4 +59,31 @@
         </set>
         where tid = #{tid}
     </update>
+
+    <update id="deleteTeacherFromCourse">
+        update course set tid=null where tid in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <delete id="deleteTeacher">
+
+        delete from teacher where tid in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="selectTname" resultType="com.hugcode.managementsystem.pojo.Teacher">
+        select tid,tname from teacher;
+    </select>
+
+    <select id="getTeacherStatistics" resultType="com.hugcode.managementsystem.pojo.TeacherStatistics">
+        select title,count(*) as count,avg(tsalary) as avgSalary from teacher group by title;
+    </select>
+
+    <insert id="insertTeacher">
+        insert into teacher(tid,tname,title,tsalary,password)
+        values(#{tid},#{tname},#{title},#{tsalary},#{password})
+    </insert>
 </mapper>

@@ -52,15 +52,26 @@
                  LEFT JOIN course ON student_course.cid = course.cid
                  LEFT JOIN teacher ON teacher.tid = course.tid;
     </select>
-
+    <sql id="credits">
+        SELECT student_course.sid,
+               sum(course.ccredit) as totalCredits,
+               sum(case when student_course.grade >= 60 then course.ccredit else 0 end) as completedCredits
+        FROM student_course
+                 JOIN course on student_course.cid = course.cid
+        GROUP BY student_course.sid
+    </sql>
     <select id="selectByCondition" resultMap="courseResultMap">
-        SELECT student.*, course.*, student_course.grade, teacher.tname
+        SELECT student.*, course.*, student_course.grade, teacher.tname,teacher.tid,
+        creditResults.totalCredits, creditResults.completedCredits
         FROM student
-                 LEFT JOIN student_course ON student.sid = student_course.sid
-                 LEFT JOIN course ON student_course.cid = course.cid
-                 LEFT JOIN teacher ON teacher.tid = course.tid
+        LEFT JOIN student_course ON student.sid = student_course.sid
+        LEFT JOIN course ON student_course.cid = course.cid
+        LEFT JOIN teacher ON teacher.tid = course.tid
+        LEFT JOIN (
+        <include refid="credits"/>
+        ) creditResults ON student.sid = creditResults.sid
         <where>
-            <if test="sid != null and sid != ''" >
+            <if test="sid != null and sid != ''">
                 student.sid = #{sid}
             </if>
             <if test="sname != null and sname != ''">
@@ -72,8 +83,15 @@
             <if test="sage != null and sage != ''">
                 AND student.sage = #{sage}
             </if>
+            <if test="totalCredits != null">
+                AND creditResults.totalCredits = #{totalCredits}
+            </if>
+            <if test="completedCredits != null">
+                AND creditResults.completedCredits = #{completedCredits}
+            </if>
         </where>
     </select>
+
 
     <select id="selectBySid" resultType="Student">
         select *
@@ -82,11 +100,13 @@
     </select>
 
     <resultMap id="courseResultMap" type="Student">
-        <result property="sid" column="sid"/>
+        <id property="sid" column="sid"/>
         <result property="sname" column="sname"/>
         <result property="ssex" column="ssex"/>
         <result property="sage" column="sage"/>
         <result property="password" column="password"/>
+        <result property="totalCredits" column="totalCredits"/>
+        <result property="completedCredits" column="completedCredits"/>
         <collection property="courses" ofType="StudentCourse">
             <id property="cid" column="cid"/>
             <result property="cname" column="cname"/>

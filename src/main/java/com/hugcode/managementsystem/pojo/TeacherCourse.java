@@ -1,40 +1,40 @@
 package com.hugcode.managementsystem.pojo;
 
-public class TeacherCourse extends Course{
-    private Double average_grade;
-    private Double max_grade;
-    private Double min_grade;
+public class TeacherCourse extends Course {
+    private Double avgGrade;
+    private Double maxGrade;
+    private Double minGrade;
 
     @Override
     public String toString() {
         return "TeacherCourse{" +
-                "average_grade=" + average_grade +
-                ", max_grade=" + max_grade +
-                ", min_grade=" + min_grade +
+                "avgGrade=" + avgGrade +
+                ", maxGrade=" + maxGrade +
+                ", minGrade=" + minGrade +
                 '}';
     }
 
-    public Double getAverage_grade() {
-        return average_grade;
+    public Double getAvgGrade() {
+        return avgGrade;
     }
 
-    public void setAverage_grade(Double average_grade) {
-        this.average_grade = average_grade;
+    public void setAvgGrade(Double avgGrade) {
+        this.avgGrade = avgGrade;
     }
 
-    public Double getMax_grade() {
-        return max_grade;
+    public Double getMaxGrade() {
+        return maxGrade;
     }
 
-    public void setMax_grade(Double max_grade) {
-        this.max_grade = max_grade;
+    public void setMaxGrade(Double maxGrade) {
+        this.maxGrade = maxGrade;
     }
 
-    public Double getMin_grade() {
-        return min_grade;
+    public Double getMinGrade() {
+        return minGrade;
     }
 
-    public void setMin_grade(Double min_grade) {
-        this.min_grade = min_grade;
+    public void setMinGrade(Double minGrade) {
+        this.minGrade = minGrade;
     }
 }

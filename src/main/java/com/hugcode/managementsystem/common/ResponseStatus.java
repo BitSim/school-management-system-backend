@@ -17,8 +17,9 @@ public enum ResponseStatus {
     STUDENT_OR_COURSE_NOT_EXIST(3001,"学生或课程不存在"),
     TEACHER_OR_COURSE_NOT_EXIST(3002,"教师或课程不存在"),
     TEACHER_NOT_EXIST(3003,"教师不存在"),
+    TEACHER_ALREADY_EXIST(3004,"教师已存在"),
 
-    ERROR(-1,"error"),
+    ERROR(400,"error"),
     ;
     private final Integer code;
     private final String description;
