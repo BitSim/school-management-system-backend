@@ -41,18 +41,16 @@ public class JwtUtil {
 //    }
 
     // 创建jwt
-    public static String createJWT(String subject) throws Exception {
+    public static String createJWT(Map<String, Object> claims,String subject) throws Exception {
         // 设置头部信息
-//		Map<String, Object> header = new HashMap<String, Object>();
-//		header.put("typ", "JWT");
-//		header.put("alg", "HS256");
+
         // 或
         // 指定header那部分签名的时候使用的签名算法，jjwt已经将这部分内容封装好了，只有{"alg":"HS256"}
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         // 创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证的方式）
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("username", "admin");
-        claims.put("password", "010203");
+//        Map<String, Object> claims = new HashMap<>();
+//        CLAIMS.PUT("USERNAME", "ADMIN");
+//        claims.put("password", "010203");
         // jti用户id，例如：20da39f8-b74e-4a9b-9a0f-a39f1f73fe64
         String jwtId = JWT_ID;
         // 生成JWT的时间

@@ -14,7 +14,7 @@ public interface StudentCourseMapper {
 
     Boolean updateGrade(@Param("sid") String sid, @Param("cid") String cid, @Param("grade") Double newGrade);
 
-    Boolean addStudentCourse(@Param("sid") String sid, @Param("cid") String cid,@Param("grade") Double grade);
+    Boolean addStudentCourse(@Param("sid") String sid, @Param("cid") String cid);
     Boolean addCourseListToStudent(@Param("sid") String sid, @Param("cids") List<String> cids);
     Double getTotalCredits(@Param("sid") String sid);
 

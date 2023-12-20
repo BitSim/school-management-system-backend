@@ -75,7 +75,7 @@
                 student.sid = #{sid}
             </if>
             <if test="sname != null and sname != ''">
-                AND student.sname = #{sname}
+                AND student.sname like concat('%',#{sname},'%')
             </if>
             <if test="ssex != null and ssex != ''">
                 AND student.ssex = #{ssex}

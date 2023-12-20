@@ -28,8 +28,8 @@
     </update>
 
     <insert id="addStudentCourse">
-        insert into student_course (sid, cid,grade)
-        values (#{sid}, #{cid},#{grade})
+        insert into student_course (sid, cid)
+        values (#{sid}, #{cid})
     </insert>
     <select id="getTotalCredits" resultType="java.lang.Double">
         select sum(course.ccredit) from student_course
@@ -68,21 +68,17 @@
     </delete>
 
     <select id="selectByCondition" resultType="com.hugcode.managementsystem.pojo.StudentCourse">
-        select student_course.*,student.sname,student.ssex,student.sage,course.cname,course.ccredit,teacher.tname,
-        case
-        when exists (select 1 from student_course sc where sc.sid = student.sid and sc.cid = course.cid) then 1
-        else 0
-        end as status
-        from student
-        cross join course
-        left join student_course on student.sid = student_course.sid and course.cid = student_course.cid
-        join teacher on course.tid = teacher.tid
+        SELECT course.*,teacher.tname,sc.grade,
+        CASE WHEN EXISTS (
+        SELECT 1
+        WHERE sc.sid = #{sid} AND sc.cid = course.cid
+        ) THEN 1 ELSE 0 END AS status
+        FROM course
+        LEFT JOIN teacher ON course.tid=teacher.tid
+        LEFT JOIN student_course sc ON sc.sid=#{sid} and course.cid = sc.cid
         <where>
-            <if test="sid != null">
-                student.sid=#{sid}
-            </if>
             <if test="studentCourse.cid != null">
-                and course.cid=#{studentCourse.cid}
+                course.cid=#{studentCourse.cid}
             </if>
             <if test="studentCourse.cname != null">
                 and course.cname like concat('%',#{studentCourse.cname},'%')
@@ -91,7 +87,7 @@
                 and teacher.tname like concat('%',#{studentCourse.tname},'%')
             </if>
             <if test="studentCourse.grade != null">
-                and student_course.grade=#{studentCourse.grade}
+                and sc.grade=#{studentCourse.grade}
             </if>
         </where>
     </select>

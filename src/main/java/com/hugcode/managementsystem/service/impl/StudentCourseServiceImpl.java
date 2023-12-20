@@ -4,13 +4,11 @@ import com.hugcode.managementsystem.mapper.StudentCourseMapper;
 import com.hugcode.managementsystem.pojo.CourseStatistics;
 import com.hugcode.managementsystem.pojo.StudentCourse;
 import com.hugcode.managementsystem.service.StudentCourseService;
-import com.hugcode.managementsystem.service.StudentService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service("StudentCourseService")
 public class StudentCourseServiceImpl implements StudentCourseService {
@@ -33,8 +31,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         return studentCourseMapper.updateGrade(sid, cid, newGrade);
     }
     @Override
-    public boolean addStudentCourse(String sid, String cid,Double grade) {
-        return studentCourseMapper.addStudentCourse(sid, cid,grade);
+    public boolean addStudentCourse(String sid, String cid) {
+        return studentCourseMapper.addStudentCourse(sid, cid);
     }
 
     @Override

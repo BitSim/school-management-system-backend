@@ -6,10 +6,10 @@ public class CourseStatistics extends Course{
     private Double average_grade;
     private Double max_grade;
     private Double min_grade;
-    public static HashMap<String,Double>getCreditMap(Double totalCredits, Double CompletedCredits){
+    public static HashMap<String,Double>getCreditMap(Double totalCredits, Double completedCredits){
             HashMap<String,Double> creditMap=new HashMap<>();
             creditMap.put("totalCredits",totalCredits);
-            creditMap.put("CompletedCredits",CompletedCredits);
+            creditMap.put("completedCredits",completedCredits);
             return creditMap;
         }
 

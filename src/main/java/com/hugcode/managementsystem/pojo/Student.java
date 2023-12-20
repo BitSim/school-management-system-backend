@@ -12,7 +12,6 @@ public class Student {
     private String ssex;
     private Integer sage;
 
-    @JsonIgnore
     private String password;
 
     private List<Course> courses;

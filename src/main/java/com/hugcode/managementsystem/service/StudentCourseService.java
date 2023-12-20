@@ -4,7 +4,6 @@ import com.hugcode.managementsystem.pojo.StudentCourse;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface StudentCourseService {
     boolean deleteBySidList(List<String> sids);
@@ -14,7 +13,7 @@ public interface StudentCourseService {
 
     boolean updateGrade(String sid, String cid, Double newGrade);
 
-    boolean addStudentCourse(String sid, String cid,Double grade);
+    boolean addStudentCourse(String sid, String cid);
 
     HashMap<String,Double> getCreditsMap(String sid);
 

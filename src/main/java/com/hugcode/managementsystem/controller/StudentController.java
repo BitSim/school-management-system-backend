@@ -67,8 +67,8 @@ public class StudentController {
     }
     @Operation(summary = "添加学生的课程", description = "")
     @PostMapping("/{sid}/courses/{cid}")
-    public ResponseResult postStudentCourse(@PathVariable String sid, @PathVariable String cid, @RequestBody Map<String, Double> gradeMap) {
-        return studentCourseService.addStudentCourse(sid, cid,gradeMap.get("grade")) ?
+    public ResponseResult postStudentCourse(@PathVariable String sid, @PathVariable String cid) {
+        return studentCourseService.addStudentCourse(sid, cid) ?
                 ResponseResult.success()
                 : ResponseResult.error(ResponseStatus.STUDENT_OR_COURSE_NOT_EXIST);
     }
@@ -90,7 +90,9 @@ public class StudentController {
         if(!studentService.login(student)) return ResponseResult.error(ResponseStatus.USER_NOT_EXIST);
 
         HashMap<String,String> res=new HashMap<>();
-        res.put("token", JwtUtil.createJWT(student.getSid()));
+        Map<String, Object> header = new HashMap<>();
+        header.put("typ", "user");
+        res.put("token", JwtUtil.createJWT(header,student.getSid()));
         return  ResponseResult.success(res);
     }
     @Operation(summary = "删除学生信息", description = "")

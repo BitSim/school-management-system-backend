@@ -1,11 +1,10 @@
 package com.hugcode.managementsystem.config;
 
-import com.hugcode.managementsystem.interceptor.JWTInterceptor;
-import jakarta.annotation.Resource;
+import com.hugcode.managementsystem.interceptor.AdminInterceptor;
+import com.hugcode.managementsystem.interceptor.UserInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -19,8 +18,15 @@ public class WebConfig implements WebMvcConfigurer {
      */
     public void addInterceptors(InterceptorRegistry registry){
         //注册拦截器要声明拦截器对象和要拦截的请求
-        registry.addInterceptor(new JWTInterceptor())
+        registry.addInterceptor(new AdminInterceptor())
                 .addPathPatterns("/**")
+                .excludePathPatterns("/api/v1/**/login/**")
+                .excludePathPatterns("/v3/api-docs")
+                .excludePathPatterns("/api/v1/students/*/courses/*","/api/v1/students/*/condition","/api/v1/students/*/courses/condition",
+                        "/api/v1/students/*/credits","/api/v1/students/*/courses/*","/api/v1/students/*");
+        registry.addInterceptor(new UserInterceptor())
+                .addPathPatterns("/api/v1/students/*/courses/*","/api/v1/students/*/condition","/api/v1/students/*/courses/condition",
+                        "/api/v1/students/*/credits","/api/v1/students/*/courses/*","/api/v1/students/*")
                 .excludePathPatterns("/api/v1/**/login/**")
                 .excludePathPatterns("/v3/api-docs");
     }

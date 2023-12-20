@@ -53,7 +53,7 @@
                 cid=#{cid}
             </if>
             <if test="cname != null and cname != ''">
-                AND cname=#{cname}
+                AND cname like concat('%',#{cname},'%')
             </if>
             <if test="tname != null and tname != ''">
                 AND tname=#{tname}

@@ -31,7 +31,9 @@ public class AdminController {
         if(!adminService.login(admin)) return ResponseResult.error(ResponseStatus.USER_NOT_EXIST);
 
         HashMap<String,String> res=new HashMap<>();
-        res.put("token", JwtUtil.createJWT(admin.getAdminId()));
+        Map<String, Object> header = new HashMap<>();
+        header.put("typ", "admin");
+        res.put("token", JwtUtil.createJWT(header,admin.getAdminId()));
         return  ResponseResult.success(res);
     }
     @GetMapping
