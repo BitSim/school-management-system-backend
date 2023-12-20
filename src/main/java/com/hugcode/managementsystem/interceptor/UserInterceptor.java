@@ -32,8 +32,7 @@ public class UserInterceptor implements HandlerInterceptor {
             if (token == null || claims==null) {
                 throw new AppException(401, "请先登录");
             }
-            if(claims.get("typ")!="admin"||claims.get("typ")!="user"){
-                System.out.println("这里");
+            if(!claims.get("typ").equals("admin")&&!claims.get("typ").equals("user")){
                 throw new AppException(401,"权限不够");
             }
 

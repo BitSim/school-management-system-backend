@@ -30,6 +30,11 @@ public class StudentController {
     private StudentCourseService studentCourseService;
     @Resource
     private CourseService courseService;
+    @Operation(summary = "校验学生身份",description = "")
+    @GetMapping
+    public ResponseResult init(){
+        return ResponseResult.success();
+    }
 
     @Operation(summary = "条件查询学生信息", description = "")
     @GetMapping({"/condition", "/{sid}/condition"})

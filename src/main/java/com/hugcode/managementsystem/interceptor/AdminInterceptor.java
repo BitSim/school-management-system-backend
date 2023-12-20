@@ -27,12 +27,11 @@ public class AdminInterceptor implements HandlerInterceptor {
 
         String token = request.getHeader("Authorization");
         Claims claims=JwtUtil.parseJWT(token);
-        System.out.println(claims);
         try {
             if (token == null || claims==null) {
                 throw new AppException(401, "请先登录");
             }
-            if(claims.get("typ")!="admin"){
+            if(!claims.get("typ").equals("admin")){
                 throw new AppException(401,"权限不够");
             }
 

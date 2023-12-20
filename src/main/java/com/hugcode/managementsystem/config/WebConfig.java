@@ -23,10 +23,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/api/v1/**/login/**")
                 .excludePathPatterns("/v3/api-docs")
                 .excludePathPatterns("/api/v1/students/*/courses/*","/api/v1/students/*/condition","/api/v1/students/*/courses/condition",
-                        "/api/v1/students/*/credits","/api/v1/students/*/courses/*","/api/v1/students/*");
+                        "/api/v1/students/*/credits","/api/v1/students/*/courses/*","/api/v1/students/*","/api/v1/students");
         registry.addInterceptor(new UserInterceptor())
                 .addPathPatterns("/api/v1/students/*/courses/*","/api/v1/students/*/condition","/api/v1/students/*/courses/condition",
-                        "/api/v1/students/*/credits","/api/v1/students/*/courses/*","/api/v1/students/*")
+                        "/api/v1/students/*/credits","/api/v1/students/*/courses/*","/api/v1/students/*","/api/v1/students")
                 .excludePathPatterns("/api/v1/**/login/**")
                 .excludePathPatterns("/v3/api-docs");
     }

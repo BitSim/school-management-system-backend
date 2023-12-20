@@ -9,8 +9,7 @@ public class Teacher {
     private String tname;
     private Double tsalary;
     private String title;
-    @JsonIgnore
-    private String password;
+
     private List<Course>courses;
 
     @Override
@@ -20,7 +19,6 @@ public class Teacher {
                 ", tname='" + tname + '\'' +
                 ", tsalary=" + tsalary +
                 ", title='" + title + '\'' +
-                ", password='" + password + '\'' +
                 ", courses=" + courses +
                 '}';
     }
@@ -55,14 +53,6 @@ public class Teacher {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public List<Course> getCourses() {

@@ -7,6 +7,7 @@ import com.hugcode.managementsystem.pojo.Admin;
 import com.hugcode.managementsystem.pojo.Student;
 import com.hugcode.managementsystem.service.AdminService;
 import com.hugcode.managementsystem.util.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.apache.coyote.Response;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class AdminController {
     @Resource
     private AdminService adminService;
+    @Operation(summary = "管理员登录",description = "")
     @PostMapping("/login")
     public ResponseResult login(@RequestBody Map<String, String> map) throws Exception {
         if(map.get("username")==null||map.get("password")==null) throw new AppException(ResponseStatus.REQUEST_PARAM_ERROR);
@@ -36,6 +38,7 @@ public class AdminController {
         res.put("token", JwtUtil.createJWT(header,admin.getAdminId()));
         return  ResponseResult.success(res);
     }
+    @Operation(summary = "校验是否为管理员",description = "")
     @GetMapping
     public ResponseResult initGet(){
         return ResponseResult.success();

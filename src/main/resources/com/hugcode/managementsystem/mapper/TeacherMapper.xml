@@ -50,9 +50,6 @@
             <if test="tsalary != null and tsalary != ''">
                 tsalary=#{tsalary},
             </if>
-            <if test="password != null and password != ''">
-                password=#{password},
-            </if>
             <if test="tname != null and tname != ''">
                 tname=#{tname}
             </if>
@@ -83,7 +80,7 @@
     </select>
 
     <insert id="insertTeacher">
-        insert into teacher(tid,tname,title,tsalary,password)
-        values(#{tid},#{tname},#{title},#{tsalary},#{password})
+        insert into teacher(tid,tname,title,tsalary)
+        values(#{tid},#{tname},#{title},#{tsalary})
     </insert>
 </mapper>
